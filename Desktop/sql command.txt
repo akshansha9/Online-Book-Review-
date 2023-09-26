@@ -1,0 +1,362 @@
+
+
+/* ---------------Problem Statement 01 ------------------*/
+
+/*( 1 )--------- Creating table --------------*/
+create table Employees 
+( 
+Empld number, 
+FirstName varchar2(20), 
+LastName varchar2(20), 
+EmailId varchar2(50), 
+Gender char(1), 
+MobileNo char(10), 
+DateOfJoining date default sysdate, 
+DeptId int 
+)
+
+
+desc employees
+
+
+
+/*( 2a )--------- Adding DOB --------------*/
+
+alter table employees  
+add DOB date
+
+/*( 2b )--------- Adding salary --------------*/
+
+alter table employees 
+add salary number(10,2)
+
+/*( 3 )--------- Modifiyng Salary Column --------------*/
+
+alter table employees 
+modify salary number(9,2)
+
+/*( 4 )--------- Droping Salary Column -------------*/
+alter table employees 
+drop column salary
+
+/*( 5 )---------Adding Bloudgroup (unused Set) and dropped --------------*/
+
+alter table employees 
+add BloodGroup varchar2(5)
+
+alter table employees 
+set unused (BloodGroup)
+.
+desc employees
+
+alter table employees 
+drop unused column
+
+/*( 6 )---------Droping table--------------*/
+
+drop table employees
+
+
+
+/* ---------------Problem Statement 02 ------------------*/
+
+/*( 1 )--------- Creating table --------------*/
+create table Employees 
+( 
+EmpId number, 
+FirstName varchar2(20), 
+LastName varchar2(20), 
+EmailId varchar2(50), 
+Gender char(1), 
+MobileNo char(10), 
+DateOfJoining date default sysdate, 
+DeptId int 
+);
+desc employees
+---- Q2 Adding Npt Null ---------------
+ALTER TABLE employees
+MODIFY FirstName NOT NULL
+---- Q3 Adding unique constrainst --------------
+ALTER TABLE Employees
+   ADD CONSTRAINT employees_Constraint UNIQUE(EmailId,MobileNo);
+---- Q4 Adding EmpId as primary key---------------
+ALTER TABLE employees
+ADD PRIMARY KEY (EmpId)
+----- Q5 Modifiyng check Constraints on Gender ---------------
+ALTER TABLE Employees
+ADD CONSTRAINT check_gender
+CHECK (Gender IN ('Male', 'Female'));
+----- Q6 Creating Departments table -----------------------
+create table departments
+(
+DeptId number,
+DeptName varchar2(20)
+);
+desc departments
+----- Q7 Adding EmpId as Foreign Key ----------
+ALTER TABLE Departments
+ADD CONSTRAINT fk_employees
+    FOREIGN KEY (DeptId)
+    REFERENCES Employees (DeptId)
+    ON DELETE SET NULL;
+
+/* ---------------Problem Statement 03 ------------------*/
+
+/*( 1 )--------- Creating table --------------*/
+create table Employees
+(
+EmpId int,
+FirstName varchar(255),
+LastName varchar(255),
+Salary int);
+Desc Employees;
+------------------ Q2 inserting values----------------
+Insert into Employees values(1,'Laya','Eluri', 20000);
+Insert into Employees values(2,'Sena','John', 25000);
+Insert into Employees values(3,'Don','Jane', 20000);
+Insert into Employees values(4,'Marvel','John', 28000);
+Insert into Employees values(5,'Mike','Moni', 30000);
+Insert into Employees values(6,'Mike','Soni', 3000);
+Insert into Employees values(7,'micky','mickey', 5000);
+Insert into Employees values(8,'ms','Dhoni', 8000);
+
+select * From employees
+-------- Q1 Adding values ---------------- =============Q3
+Insert into Employees values(9,'kohli','virat',60000)
+-------- Q2 Display FirstName --------
+select Firstname,salary from employees
+-------- Q3 showing salary less than 20k -------
+Select * From Employees 
+where Salary<20000
+-------- Q4 Updating salary of Mike -------
+UPDATE Employees
+SET salary ='9999'
+WHERE FirstName = 'Mike';
+-------- Q5 Delete all salary less than 8000 ---------
+DELETE FROM Employees
+WHERE salary < 8000
+
+---------------DQL---------------  ===> Q4
+---------- Q1 deleting employee john-----
+Select * from employees
+where firstName Like 'john'
+---------- Q2 display salary from 10k to 15k ---------
+Select * From Employees
+where salary between 10000 and 50000
+---------- Q3 find employee having first name 'jo' ---------
+Select * From employees
+where FirstName Like '%jo'
+
+
+
+
+/* ---------------Problem Statement 04 ------------------*/
+
+/*( 1 )--------- Creating table --------------*/
+
+
+select DEPTNO,Max(SAL) from EMP
+ GROUP BY DEPTNO
+
+select EName , Sal*12 from Emp
+
+SELECT ENAME ,  SUBSTR(ENAME, 1 , 3 )
+FROM EMP
+
+
+
+
+
+/* ---------------Problem Statement 05 ------------------*/
+
+/*( 1 )--------- Creating table --------------*/
+
+SET TERMOUT ON
+PROMPT Building demonstration tables.  Please wait.
+SET TERMOUT OFF
+
+DROP TABLE EMP;
+DROP TABLE DEPT;
+DROP TABLE BONUS;
+DROP TABLE SALGRADE;
+DROP TABLE DUMMY;
+
+CREATE TABLE EMP
+       (EMPNO NUMBER(4) NOT NULL,
+        ENAME VARCHAR2(10),
+        JOB VARCHAR2(9),
+        MGR NUMBER(4),
+        HIREDATE DATE,
+        SAL NUMBER(7, 2),
+        COMM NUMBER(7, 2),
+        DEPTNO NUMBER(2));
+
+INSERT INTO EMP VALUES
+        (7369, 'SMITH',  'CLERK',     7902,
+        TO_DATE('17-DEC-1980', 'DD-MON-YYYY'),  800, NULL, 20);
+INSERT INTO EMP VALUES
+        (7499, 'ALLEN',  'SALESMAN',  7698,
+        TO_DATE('20-FEB-1981', 'DD-MON-YYYY'), 1600,  300, 30);
+INSERT INTO EMP VALUES
+        (7521, 'WARD',   'SALESMAN',  7698,
+        TO_DATE('22-FEB-1981', 'DD-MON-YYYY'), 1250,  500, 30);
+INSERT INTO EMP VALUES
+        (7566, 'JONES',  'MANAGER',   7839,
+        TO_DATE('2-APR-1981', 'DD-MON-YYYY'),  2975, NULL, 20);
+INSERT INTO EMP VALUES
+        (7654, 'MARTIN', 'SALESMAN',  7698,
+        TO_DATE('28-SEP-1981', 'DD-MON-YYYY'), 1250, 1400, 30);
+INSERT INTO EMP VALUES
+        (7698, 'BLAKE',  'MANAGER',   7839,
+        TO_DATE('1-MAY-1981', 'DD-MON-YYYY'),  2850, NULL, 30);
+INSERT INTO EMP VALUES
+        (7782, 'CLARK',  'MANAGER',   7839,
+        TO_DATE('9-JUN-1981', 'DD-MON-YYYY'),  2450, NULL, 10);
+INSERT INTO EMP VALUES
+        (7788, 'SCOTT',  'ANALYST',   7566,
+        TO_DATE('09-DEC-1982', 'DD-MON-YYYY'), 3000, NULL, 20);
+INSERT INTO EMP VALUES
+        (7839, 'KING',   'PRESIDENT', NULL,
+        TO_DATE('17-NOV-1981', 'DD-MON-YYYY'), 5000, NULL, 10);
+INSERT INTO EMP VALUES
+        (7844, 'TURNER', 'SALESMAN',  7698,
+        TO_DATE('8-SEP-1981', 'DD-MON-YYYY'),  1500,    0, 30);
+INSERT INTO EMP VALUES
+        (7876, 'ADAMS',  'CLERK',     7788,
+        TO_DATE('12-JAN-1983', 'DD-MON-YYYY'), 1100, NULL, 20);
+INSERT INTO EMP VALUES
+        (7900, 'JAMES',  'CLERK',     7698,
+        TO_DATE('3-DEC-1981', 'DD-MON-YYYY'),   950, NULL, 30);
+INSERT INTO EMP VALUES
+        (7902, 'FORD',   'ANALYST',   7566,
+        TO_DATE('3-DEC-1981', 'DD-MON-YYYY'),  3000, NULL, 20);
+INSERT INTO EMP VALUES
+        (7934, 'MILLER', 'CLERK',     7782,
+        TO_DATE('23-JAN-1982', 'DD-MON-YYYY'), 1300, NULL, 10);
+
+CREATE TABLE DEPT
+       (DEPTNO NUMBER(2),
+        DNAME VARCHAR2(14),
+        LOC VARCHAR2(13) );
+
+INSERT INTO DEPT VALUES (10, 'ACCOUNTING', 'NEW YORK');
+INSERT INTO DEPT VALUES (20, 'RESEARCH',   'DALLAS');
+INSERT INTO DEPT VALUES (30, 'SALES',      'CHICAGO');
+INSERT INTO DEPT VALUES (40, 'OPERATIONS', 'BOSTON');
+
+CREATE TABLE BONUS
+        (ENAME VARCHAR2(10),
+         JOB   VARCHAR2(9),
+         SAL   NUMBER,
+         COMM  NUMBER);
+
+CREATE TABLE SALGRADE
+        (GRADE NUMBER,
+         LOSAL NUMBER,
+         HISAL NUMBER);
+
+INSERT INTO SALGRADE VALUES (1,  700, 1200);
+INSERT INTO SALGRADE VALUES (2, 1201, 1400);
+INSERT INTO SALGRADE VALUES (3, 1401, 2000);
+INSERT INTO SALGRADE VALUES (4, 2001, 3000);
+INSERT INTO SALGRADE VALUES (5, 3001, 9999);
+
+CREATE TABLE DUMMY
+        (DUMMY NUMBER);
+
+INSERT INTO DUMMY VALUES (0);
+
+COMMIT;
+
+SET TERMOUT ON
+PROMPT Demonstration table build is complete.
+
+================= PS 05 ===================================
+--------Q1 Display job column values suppressed--------
+SELECT DISTINCT JOB
+FROM EMP
+--------Q2 Display rows where Ename begains with letter A------
+select * from Emp
+where EName Like 'A%'
+--------Q3 Display Max Sal depertmentwise----------
+SELECT DEPTNO,Max(SAL) FROM EMP 
+group BY DEPTNO
+--------Q4 Display all names whose Letter r in third position-------
+select * from Emp
+where EName Like '__R%'
+--------Q5 Diplay minimum salary jobwise--------
+SELECT Job,MIN(SAL) FROM EMP 
+Group BY JOB;
+--------Q6 Display employees in decending order-----
+SELECT ENAME FROM EMP
+ORDER BY ENAME DESC;
+--------Q7 display job column ends with letter T ------
+select * from Emp
+where Job Like '%T'
+--------Q8 display DEPTNO column with value compressed-----
+SELECT DISTINCT DEPTNO
+FROM EMP
+
+
+================ PS 06 ==================================
+
+---------------01  select * from EMP 
+select ENAME,Job from EMP 
+where DEPTNO = 10
+-----------------02
+SELECT Ename 
+FROM emp
+WHERE sal = (SELECT MAX(sal) FROM emp)
+----------------03
+SELECT Ename , Sal 
+FROM emp
+WHERE sal = (SELECT Min(sal) FROM emp)  
+---------------04
+SELECT MAX(Sal) From Emp
+WHERE Sal < ( SELECT Max(Sal) FROM Emp)
+ --------------	07
+ SELECT ENAME,job FROM EMP 
+ WHERE DEPTNO != 30
+
+
+ 	select ENAME,job  from emp
+ 	where job = manager deptno != 30
+
+
+================ PS 07 ==================================
+
+
+CREATE TABLE Students
+(
+id int,
+first_name varchar2(15));
+
+
+
+
+CREATE TABLE Papers
+(
+student_id int,
+title varchar2(100),
+grade number);
+
+INSERT INTO students VALUES (1, 'Caleb');
+INSERT INTO students VALUES (2, 'Samantha');
+INSERT INTO students VALUES (3, 'Raj');
+INSERT INTO students VALUES (4, 'Carlo');
+INSERT INTO students VALUES (5, 'Lisa');
+select * from students
+
+INSERT INTO Papers VALUES (1, 'my first book report', '60');
+INSERT INTO Papers VALUES (1, 'my second book report', '75');
+INSERT INTO Papers VALUES (2, 'russian lit through the ages', '94');
+INSERT INTO Papers VALUES (2, 'de montainge and the art of the essay', '98');
+INSERT INTO Papers VALUES (4, 'borges and magical realism', '89')
+select * from Papers
+ALTER TABLE papers
+ADD CONSTRAINT fk_papers
+    FOREIGN KEY (studentId)
+    REFERENCES students (Id)
+PRIMARY KEY
+select students.firstname,papers.grade,papers.title from  students , papers
+ order papers.grade desc
