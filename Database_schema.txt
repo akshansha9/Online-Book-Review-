@@ -1,0 +1,33 @@
+
++--------------+     +-------------+     +------------+     +---------+
+|     User     |     |     Book    |     |   Rating   |     |  Admin  |
++--------------+     +-------------+     +------------+     +---------+
+| userID (PK)  |     | bookID (PK) |     | ratingID   |     |         |
+| username     |     | title       |     | ratingValue|     |         |
+| password     |     | author      |     | timestamp  |     |         |
+| email        |     | description |     | userID (FK)|     |         |
++--------------+     | price       |     | bookID (FK)|     +---------+
+                     +-------------+
+
++--------------+
+|   Comment    |
++--------------+
+| commentID    |
+| commentText  |
+| timestamp    |
+| userID (FK)  |
+| bookID (FK)  |
++--------------+
+```
+
+In this representation:
+
+- Each table corresponds to an entity in the ER diagram.
+- Primary keys (PK) uniquely identify each record.
+- Foreign keys (FK) establish relationships between tables.
+
+Here are the relationships:
+
+- The `User` table has a one-to-many relationship with both `Rating` and `Comment` tables.
+- The `Book` table also has a one-to-many relationship with both `Rating` and `Comment` tables.
+- The `Rating` and `Comment` tables have foreign keys (`userID` and `bookID`) referencing the `User` and `Book` tables, respectively.
